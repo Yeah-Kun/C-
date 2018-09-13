@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/MainPage">
+        <file>Resources/火箭.png</file>
+    </qresource>
+</RCC>

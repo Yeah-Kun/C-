@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>shape</class>
+ <widget class="QWidget" name="shape">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1074</width>
+    <height>789</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>850</x>
+     <y>190</y>
+     <width>41</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>形状：</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="shapeBox">
+   <property name="geometry">
+    <rect>
+     <x>890</x>
+     <y>190</y>
+     <width>151</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>线</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>圆形</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>正方形</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>正三角形</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QPushButton" name="clearBtn">
+   <property name="geometry">
+    <rect>
+     <x>870</x>
+     <y>450</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>清屏</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="picBtn">
+   <property name="geometry">
+    <rect>
+     <x>870</x>
+     <y>380</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>图片选择</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>850</x>
+     <y>270</y>
+     <width>41</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>颜色：</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="styleBox">
+   <property name="geometry">
+    <rect>
+     <x>890</x>
+     <y>230</y>
+     <width>151</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>直线</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>长虚线</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>虚线</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>长虚线-虚线</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>长虚线-虚线-虚线</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>850</x>
+     <y>230</y>
+     <width>41</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>线型：</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="colorBtn">
+   <property name="geometry">
+    <rect>
+     <x>890</x>
+     <y>270</y>
+     <width>151</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>修改</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,31 @@
+﻿  Moc'ing MainPage.h...
+  Moc'ing KCFSelector.h...
+  Moc'ing ObjectCatcher.h...
+  Moc'ing VideoCatcher.h...
+  ColorRecognition.cpp
+  Common.cpp
+  ControlCamera.cpp
+  KCFSelector.cpp
+  main.cpp
+  MainPage.cpp
+  ObjectCatcher.cpp
+  Test.cpp
+d:\code\cpp\qt\objectrecognition\objectrecognition\videoprocessor.h(4): fatal error C1083: 无法打开包括文件: “opencv.hpp”: No such file or directory (编译源文件 Test.cpp)
+  VideoCatcher.cpp
+d:\code\cpp\qt\objectrecognition\objectrecognition\common.h(5): fatal error C1083: 无法打开包括文件: “cv.h”: No such file or directory (编译源文件 Common.cpp)
+  VideoProcessor.cpp
+d:\code\cpp\qt\objectrecognition\objectrecognition\common.h(5): fatal error C1083: 无法打开包括文件: “cv.h”: No such file or directory (编译源文件 KCFSelector.cpp)
+  moc_MainPage.cpp
+d:\code\cpp\qt\objectrecognition\objectrecognition\common.h(5): fatal error C1083: 无法打开包括文件: “cv.h”: No such file or directory (编译源文件 ControlCamera.cpp)
+  moc_KCFSelector.cpp
+  moc_ObjectCatcher.cpp
+d:\code\cpp\qt\objectrecognition\objectrecognition\common.h(5): fatal error C1083: 无法打开包括文件: “cv.h”: No such file or directory (编译源文件 ObjectCatcher.cpp)
+  moc_VideoCatcher.cpp
+d:\code\cpp\qt\objectrecognition\objectrecognition\videoprocessor.h(4): fatal error C1083: 无法打开包括文件: “opencv.hpp”: No such file or directory (编译源文件 VideoProcessor.cpp)
+  qrc_Image.cpp
+  qrc_MainPage.cpp
+d:\code\cpp\qt\objectrecognition\objectrecognition\common.h(5): fatal error C1083: 无法打开包括文件: “cv.h”: No such file or directory (编译源文件 main.cpp)
+d:\code\cpp\qt\objectrecognition\objectrecognition\common.h(5): fatal error C1083: 无法打开包括文件: “cv.h”: No such file or directory (编译源文件 MainPage.cpp)
+d:\code\cpp\qt\objectrecognition\objectrecognition\common.h(5): fatal error C1083: 无法打开包括文件: “cv.h”: No such file or directory (编译源文件 .\GeneratedFiles\Release\moc_KCFSelector.cpp)
+d:\code\cpp\qt\objectrecognition\objectrecognition\common.h(5): fatal error C1083: 无法打开包括文件: “cv.h”: No such file or directory (编译源文件 .\GeneratedFiles\Release\moc_ObjectCatcher.cpp)
+d:\code\cpp\qt\objectrecognition\objectrecognition\common.h(5): fatal error C1083: 无法打开包括文件: “cv.h”: No such file or directory (编译源文件 .\GeneratedFiles\Release\moc_MainPage.cpp)

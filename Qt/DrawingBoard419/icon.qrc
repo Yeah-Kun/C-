@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/board/icon">
+        <file>icon/设计.png</file>
+        <file>icon/涂鸦.png</file>
+        <file>icon/游戏.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/model/image">
+        <file>plane.jpg</file>
+        <file>plane2.jpg</file>
+    </qresource>
+    <qresource prefix="/board">
+        <file>icon/设计.png</file>
+        <file>icon/涂鸦.png</file>
+        <file>icon/游戏.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/model/plane">
+        <file>plane2.jpg</file>
+        <file>plane.jpg</file>
+    </qresource>
+</RCC>

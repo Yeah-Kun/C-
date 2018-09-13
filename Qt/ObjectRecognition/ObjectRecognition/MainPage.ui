@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainPageClass</class>
+ <widget class="QMainWindow" name="MainPageClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1578</width>
+    <height>852</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>地面站</string>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>32</width>
+    <height>32</height>
+   </size>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <widget class="QMdiArea" name="mdiArea">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>11</y>
+      <width>1461</width>
+      <height>660</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>1200</width>
+      <height>660</height>
+     </size>
+    </property>
+    <property name="background">
+     <brush brushstyle="SolidPattern">
+      <color alpha="255">
+       <red>160</red>
+       <green>160</green>
+       <blue>160</blue>
+      </color>
+     </brush>
+    </property>
+    <property name="activationOrder">
+     <enum>QMdiArea::CreationOrder</enum>
+    </property>
+    <property name="viewMode">
+     <enum>QMdiArea::TabbedView</enum>
+    </property>
+    <property name="tabsClosable">
+     <bool>true</bool>
+    </property>
+    <property name="tabsMovable">
+     <bool>true</bool>
+    </property>
+    <property name="tabShape">
+     <enum>QTabWidget::Triangular</enum>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1578</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <addaction name="action_4"/>
+    <addaction name="action_5"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>设置</string>
+    </property>
+    <widget class="QMenu" name="menu_5">
+     <property name="title">
+      <string>选择摄像头</string>
+     </property>
+     <addaction name="action_6"/>
+     <addaction name="action_7"/>
+    </widget>
+    <addaction name="menu_5"/>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>功能</string>
+    </property>
+    <widget class="QMenu" name="menu_6">
+     <property name="title">
+      <string>目标识别</string>
+     </property>
+     <addaction name="color_selector"/>
+     <addaction name="KCF_selector"/>
+    </widget>
+    <addaction name="video"/>
+    <addaction name="menu_6"/>
+    <addaction name="tracking"/>
+    <addaction name="action_2"/>
+   </widget>
+   <widget class="QMenu" name="menu_4">
+    <property name="title">
+     <string>工具</string>
+    </property>
+    <addaction name="action_ROI"/>
+   </widget>
+   <widget class="QMenu" name="menu_7">
+    <property name="title">
+     <string>测试</string>
+    </property>
+    <addaction name="VideoProcessor"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
+   <addaction name="menu_3"/>
+   <addaction name="menu_4"/>
+   <addaction name="menu_7"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="fileDock">
+   <property name="windowTitle">
+    <string>文件</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <widget class="QTreeView" name="treeView">
+     <property name="geometry">
+      <rect>
+       <x>-20</x>
+       <y>0</y>
+       <width>161</width>
+       <height>631</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>160</width>
+       <height>630</height>
+      </size>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="consoleDock">
+   <property name="windowTitle">
+    <string>输出</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <widget class="QPlainTextEdit" name="plainTextEdit">
+     <property name="geometry">
+      <rect>
+       <x>-7</x>
+       <y>-4</y>
+       <width>1581</width>
+       <height>121</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <action name="action_2">
+   <property name="text">
+    <string>目标测距</string>
+   </property>
+  </action>
+  <action name="action_4">
+   <property name="text">
+    <string>打开文件</string>
+   </property>
+  </action>
+  <action name="action_5">
+   <property name="text">
+    <string>保存文件</string>
+   </property>
+  </action>
+  <action name="video">
+   <property name="text">
+    <string>视频录制</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="action_6">
+   <property name="text">
+    <string>内置摄像头</string>
+   </property>
+  </action>
+  <action name="action_7">
+   <property name="text">
+    <string>外部摄像头</string>
+   </property>
+  </action>
+  <action name="color_selector">
+   <property name="text">
+    <string>颜色识别器</string>
+   </property>
+  </action>
+  <action name="KCF_selector">
+   <property name="text">
+    <string>KCF识别器</string>
+   </property>
+  </action>
+  <action name="action_ROI">
+   <property name="text">
+    <string>选择ROI</string>
+   </property>
+  </action>
+  <action name="tracking">
+   <property name="text">
+    <string>目标跟踪</string>
+   </property>
+  </action>
+  <action name="test_VideoProcessor">
+   <property name="text">
+    <string>VideoProcessor</string>
+   </property>
+  </action>
+  <action name="VideoProcessor">
+   <property name="text">
+    <string>test_VideoProcessor</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="MainPage.qrc"/>
+ </resources>
+ <connections/>
+</ui>
