@@ -1,4 +1,4 @@
-#include "mainpage.h"
+﻿#include "mainpage.h"
 #include "ui_mainpage.h"
 
 MainPage::MainPage(QWidget *parent) :
@@ -17,6 +17,8 @@ MainPage::MainPage(QWidget *parent) :
     insuranceStatus = false;
     lockStatus = false;
     launchStatus = false;
+    trackerInit(); // 跟踪器初始化
+    fileName = "Rect.txt";
     //setWindowFlags(Qt::FramelessWindowHint);
 
     // 建立连接
@@ -28,9 +30,11 @@ MainPage::MainPage(QWidget *parent) :
     connect(ui->scram_btn, SIGNAL(clicked()), this, SLOT(openScram()));
     connect(imageCapture, SIGNAL(imageCaptured(int,QImage)), this, SLOT(showScreen(int, QImage)));
     connect(this, SIGNAL(textSend(QString)), this, SLOT(textReceiver(QString)));
+    if(imageCapture->isCaptureDestinationSupported(QCameraImageCapture::CaptureToBuffer)) // 是否支持输出到缓冲区
+        imageCapture->setCaptureDestination(QCameraImageCapture::CaptureToBuffer); // 保存到内存缓冲区
 
     // 开始工作
-    timer->start(15);
+    timer->start(10);
     camera->start();
 }
 
@@ -42,8 +46,15 @@ MainPage::~MainPage()
 
 void MainPage::showScreen(int, QImage image)
 {
-    ui->screen->image = image;
-    ui->screen->imageRect = image.rect();
+    oriFrame = image;
+    ui->screen->getImage(image);
+    ui->screen->getImageRect(image.rect());
+    if(lockStatus){
+        cv::Mat frame = Common::QImage2cvMat(image);
+        cv::Rect result = tracker.update(frame);
+        rect2File(320.0, 240.0, result.x + result.width / 2, result.y + result.height/2, result.width, result.height);
+        ui->screen->setBoxRect(QRect(result.x, result.y, result.width, result.height));
+    }
     ui->screen->update();
 }
 
@@ -75,74 +86,120 @@ void MainPage::getFrame()
 void MainPage::openInsurance()
 {
 
-    insuranceStatus = true;
-    ui->insuranceBtn->setStyleSheet("QPushButton{"
-                                    "background-image:url(:/Resources/button_active.png);"
-                                    "border-width: 30px;"
-                                    "border-radius: 30px;"
-                                    "color:white;"
-                                    "}");
-    this->textSender("保险打开！");
-
+    if(!insuranceStatus){
+        insuranceStatus = true;
+        ui->insuranceBtn->setStyleSheet("QPushButton{"
+                                        "background-image:url(:/Resources/button_active.png);"
+                                        "border-width: 30px;"
+                                        "border-radius: 30px;"
+                                        "color:white;"
+                                        "}");
+        textSender("保险打开！");
+    }
 }
 
 void MainPage::openLock()
 {
-    if(insuranceStatus){
+    if(!lockStatus){ // 锁定
+        if(insuranceStatus && ui->screen->isBoxSelect()){ // 保险打开，并且锁定对象
 
-        lockStatus = true;
+            lockStatus = true;
+            ui->lockBtn->setStyleSheet("QPushButton{"
+                                       "background-image:url(:/Resources/button_active.png);"
+                                       "border-width: 30px;"
+                                       "border-radius: 30px;"
+                                       "color:white;"
+                                       "}");
+            boxInit(oriFrame, ui->screen->getBoxRect());
+            textSender("目标锁定！");
+        }
+        else
+            textSender("请选定目标框！！！");
+    }
+    else{ // 取消锁定
         ui->lockBtn->setStyleSheet("QPushButton{"
-                                   "background-image:url(:/Resources/button_active.png);"
+                                   "background-image:url(:/Resources/button_inactive.png);"
                                    "border-width: 30px;"
                                    "border-radius: 30px;"
                                    "color:white;"
                                    "}");
+        lockStatus = false;
+        trackerInit(); // 重新设置追踪器
+        textSender("取消锁定！");
     }
-
 }
 
 void MainPage::openLaunch()
 {
-    if(insuranceStatus && lockStatus){
+    if(!launchStatus){
+        if(insuranceStatus && lockStatus){
 
-        launchStatus = true;
-        ui->launchBtn->setStyleSheet("QPushButton{"
-                                     "background-image:url(:/Resources/button_active.png);"
-                                     "border-width: 30px;"
-                                     "border-radius: 30px;"
-                                     "color:white;"
-                                     "}");
+            launchStatus = true;
+            ui->launchBtn->setStyleSheet("QPushButton{"
+                                         "background-image:url(:/Resources/button_active.png);"
+                                         "border-width: 30px;"
+                                         "border-radius: 30px;"
+                                         "color:white;"
+                                         "}");
+            textSender("发射灭火弹！");
+        }
     }
-
 }
 
 void MainPage::openScram()
 {
-    if(launchStatus){
-        scramStatus = true;
-        ui->scram_btn->setStyleSheet("QPushButton{"
-                                     "background-image:url(:/Resources/button_active.png);"
-                                     "border-width: 30px;"
-                                     "border-radius: 30px;"
-                                     "color:white;"
-                                     "}");
+    if(!scramStatus){
+        if(launchStatus){
+            scramStatus = true;
+            ui->scram_btn->setStyleSheet("QPushButton{"
+                                         "background-image:url(:/Resources/button_active.png);"
+                                         "border-width: 30px;"
+                                         "border-radius: 30px;"
+                                         "color:white;"
+                                         "}");
+            textSender("灭火弹紧急制动！");
+        }
     }
-
 }
 
 void MainPage::textReceiver(const QString &text)
 {
-    ui->textBrowser->setText(text);
+    ui->textBrowser->append(text);
+}
+
+void MainPage::trackerInit()
+{
+    bool HOG = false;
+    bool FIXEDWINDOW = false;
+    bool MULTISCALE = true;
+    //bool SILENT = true;
+    bool LAB = false;
+    tracker = KCFTracker(HOG, FIXEDWINDOW, MULTISCALE, LAB);
+}
+
+void MainPage::boxInit(const QImage &image,const QRect& select_roi)
+{
+    double xMin = select_roi.x();
+    double yMin = select_roi.y();
+    double width = select_roi.width();
+    double height = select_roi.height();
+    cv::Mat frame = Common::QImage2cvMat(image);
+    qDebug() << frame.data;
+    tracker.init( cv::Rect2d(xMin, yMin, width, height), frame);
+}
+
+void MainPage::rect2File(float center_x, float center_t, float track_x, float track_y, float width, float height)
+{
+
+    outFile.open(fileName, std::ofstream::trunc);
+    outFile << center_x << "," << center_t << "," << track_x << "," << track_y << "," << width<< "," << height;
+    outFile.close();
 }
 
 void MainPage::textSender(const QString& text)
 {
     QDateTime time = QDateTime::currentDateTime();
-    //QString current_time = time.toString("yyyy-MM-dd hh:mm:ss dddd");
-    QString current_time = time.toString("yyyy-MM-dd hh:mm:ss dddd");
-    QString info_text= current_time + ":" + text;
-    emit textSend(info_text);
+    QString current_time = time.toString(" yyyy-MM-dd hh:mm:ss ");
+    QString info_text= current_time + text;
+    emit textSend(info_text); // 发射信号（内容）
 }
-
-
-// http://wd3600.com/html/part/index18_2.html

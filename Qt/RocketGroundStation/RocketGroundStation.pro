@@ -23,13 +23,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        main.cpp \
         mainpage.cpp \
-    showlabel.cpp
+    showlabel.cpp \
+    fhog.cpp \
+    kcftracker.cpp \
+    main.cpp \
+    common.cpp
 
 HEADERS += \
         mainpage.h \
-    showlabel.h
+    showlabel.h \
+    ffttools.hpp \
+    fhog.hpp \
+    kcftracker.hpp \
+    tracker.h \
+    common.h \
+    recttools.hpp
 
 FORMS += \
         mainpage.ui
@@ -40,3 +49,9 @@ unix|win32: LIBS += -lUser32
 
 RESOURCES += \
     resources.qrc
+
+INCLUDEPATH += C:/opencv-3.4.2_build/install/include \
+               C:/opencv-3.4.2_build/install/include/opencv \
+               C:/opencv-3.4.2_build/install/include/opencv2
+
+LIBS += C:/opencv-3.4.2_build/install/x64/vc15/lib/*.lib

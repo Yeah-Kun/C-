@@ -138,6 +138,12 @@
           <height>480</height>
          </size>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>640</width>
+          <height>480</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -181,6 +187,7 @@
 	background-image:url(:/Resources/launch_log.png);
 	border-width:0;
 	border-style:outset;
+	color:white;
 }</string>
               </property>
               <property name="lineWidth">

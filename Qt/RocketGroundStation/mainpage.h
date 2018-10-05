@@ -1,4 +1,4 @@
-#ifndef MAINPAGE_H
+﻿#ifndef MAINPAGE_H
 #define MAINPAGE_H
 
 #include <Windows.h>
@@ -17,8 +17,12 @@
 #include <QCameraImageCapture>
 #include <QPainter>
 #include <QDateTime>
+#include <thread>
+#include <fstream>
 #include "showlabel.h"
-
+#include "tracker.h"
+#include "kcftracker.hpp"
+#include "common.h"
 
 namespace Ui {
 class MainPage;
@@ -44,13 +48,17 @@ private slots:
     void selectCamrea(QAction*); // 选择摄像头
     void getFrame(); // 获得帧
     void openInsurance();
-    void openLock();
+    void openLock();  // 锁定按钮
     void openLaunch();
-    void openScram();
+    void openScram();  // 打开急停按钮
     void textReceiver(const QString& text);
 
 
 private:
+    void trackerInit();
+    void boxInit(const QImage& image, const QRect& select_roi);
+    void rect2File(float center_x, float center_t, float track_x, float track_y, float width, float height); // 将检测的框输出到文件
+
     Ui::MainPage *ui;
     QTimer* timer;
     QScreen *screen;
@@ -61,7 +69,11 @@ private:
     bool lockStatus;
     bool launchStatus;
     bool scramStatus;
-
+    KCFTracker tracker;   // 追踪器
+    QImage oriFrame;
+    QVector<QString> textVector;
+    std::ofstream outFile;
+    std::string fileName;
 };
 
 #endif // MAINPAGE_H
