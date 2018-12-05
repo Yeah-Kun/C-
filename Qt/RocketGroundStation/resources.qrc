@@ -10,5 +10,6 @@
         <file>Resources/tool.png</file>
         <file>Resources/distance_title.png</file>
         <file>Resources/show_frame.png</file>
+        <file>Resources/火箭.png</file>
     </qresource>
 </RCC>

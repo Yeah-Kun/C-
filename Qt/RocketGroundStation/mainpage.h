@@ -17,12 +17,15 @@
 #include <QCameraImageCapture>
 #include <QPainter>
 #include <QDateTime>
+#include <QCameraViewfinderSettings>
+#include <QSerialPortInfo>
 #include <thread>
 #include <fstream>
 #include "showlabel.h"
 #include "tracker.h"
 #include "kcftracker.hpp"
 #include "common.h"
+#include "serialcontroler.h"
 
 namespace Ui {
 class MainPage;
@@ -46,6 +49,7 @@ signals:
 private slots:
     void showScreen(int, QImage);
     void selectCamrea(QAction*); // 选择摄像头
+    void selectSerialPort(QAction*); // 选择端口
     void getFrame(); // 获得帧
     void openInsurance();
     void openLock();  // 锁定按钮
@@ -57,7 +61,7 @@ private slots:
 private:
     void trackerInit();
     void boxInit(const QImage& image, const QRect& select_roi);
-    void rect2File(float center_x, float center_t, float track_x, float track_y, float width, float height); // 将检测的框输出到文件
+    void rect2File(float center_x, float center_y, float track_x, float track_y, float width, float height); // 将检测的框输出到文件
 
     Ui::MainPage *ui;
     QTimer* timer;
@@ -74,6 +78,8 @@ private:
     QVector<QString> textVector;
     std::ofstream outFile;
     std::string fileName;
+    std::vector<float> RValues; // 遥控器阻值
+    serialControler portControler; // 串口控制类
 };
 
 #endif // MAINPAGE_H

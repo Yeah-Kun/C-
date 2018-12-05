@@ -29,7 +29,11 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>地面站v0.1</string>
+   <string>地面站v0.3</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/Resources/火箭.png</normaloff>:/Resources/火箭.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">MainPage{background-image:url(:/Resources/background_image.png)}</string>
@@ -323,7 +327,7 @@
               <property name="font">
                <font>
                 <family>Agency FB</family>
-                <pointsize>11</pointsize>
+                <pointsize>10</pointsize>
                </font>
               </property>
               <property name="styleSheet">
@@ -440,7 +444,7 @@
               <property name="font">
                <font>
                 <family>Agency FB</family>
-                <pointsize>11</pointsize>
+                <pointsize>10</pointsize>
                </font>
               </property>
               <property name="styleSheet">
@@ -743,7 +747,13 @@
      <string>摄像头</string>
     </property>
    </widget>
+   <widget class="QMenu" name="serialPortMenu">
+    <property name="title">
+     <string>串口</string>
+    </property>
+   </widget>
    <addaction name="cameraMenu"/>
+   <addaction name="serialPortMenu"/>
   </widget>
   <action name="camera_0">
    <property name="text">
@@ -764,6 +774,8 @@
    <header location="global">showlabel.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

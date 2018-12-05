@@ -4,9 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui multimedia multimediawidgets
+QT       += core gui multimedia multimediawidgets serialport
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
 
 TARGET = RocketGroundStation
 TEMPLATE = app
@@ -28,7 +28,8 @@ SOURCES += \
     fhog.cpp \
     kcftracker.cpp \
     main.cpp \
-    common.cpp
+    common.cpp \
+    serialcontroler.cpp
 
 HEADERS += \
         mainpage.h \
@@ -38,7 +39,8 @@ HEADERS += \
     kcftracker.hpp \
     tracker.h \
     common.h \
-    recttools.hpp
+    recttools.hpp \
+    serialcontroler.h
 
 FORMS += \
         mainpage.ui

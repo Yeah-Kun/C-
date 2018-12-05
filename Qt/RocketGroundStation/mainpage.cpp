@@ -14,6 +14,9 @@ MainPage::MainPage(QWidget *parent) :
     foreach (const QCameraInfo &cameraInfo, cameras) {
         ui->cameraMenu->addAction(cameraInfo.description());
     }
+    foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts()) {
+        ui->serialPortMenu->addAction(info.portName());
+    }
     insuranceStatus = false;
     lockStatus = false;
     launchStatus = false;
@@ -23,7 +26,8 @@ MainPage::MainPage(QWidget *parent) :
 
     // 建立连接
     connect(timer, SIGNAL(timeout()), this, SLOT(getFrame()));
-    connect(ui->menuBar,SIGNAL(triggered(QAction*)),this,SLOT(selectCamrea(QAction*)));
+    connect(ui->cameraMenu,SIGNAL(triggered(QAction*)),this,SLOT(selectCamrea(QAction*))); // 这里有待改进，应该重写信号
+    connect(ui->serialPortMenu,SIGNAL(triggered(QAction*)),this,SLOT(selectSerialPort(QAction*)));
     connect(ui->insuranceBtn, SIGNAL(clicked()), this, SLOT(openInsurance()));
     connect(ui->lockBtn, SIGNAL(clicked()), this, SLOT(openLock()));
     connect(ui->launchBtn, SIGNAL(clicked()), this, SLOT(openLaunch()));
@@ -52,7 +56,11 @@ void MainPage::showScreen(int, QImage image)
     if(lockStatus){
         cv::Mat frame = Common::QImage2cvMat(image);
         cv::Rect result = tracker.update(frame);
-        rect2File(320.0, 240.0, result.x + result.width / 2, result.y + result.height/2, result.width, result.height);
+        //rect2File(320.0, 240.0, result.x + result.width / 2, result.y + result.height/2, result.width, result.height);
+        // 串口发送数据
+        portControler.sendData(320.0, 240.0, result.x + result.width / 2, result.y + result.height/2, result.width, result.height);
+        //Sleep(100);
+        portControler.receiveData(); // 接收数据
         ui->screen->setBoxRect(QRect(result.x, result.y, result.width, result.height));
     }
     ui->screen->update();
@@ -66,8 +74,27 @@ void MainPage::selectCamrea(QAction *act)
         if(cameraInfo.description() == act->text()){
             camera = new QCamera(cameraInfo);
             camera->start();
+            QCameraViewfinderSettings set;   // 临时设置，控制摄像头的分辨率
+            set.setResolution(640, 480);
+            camera->setViewfinderSettings(set);
             imageCapture= new QCameraImageCapture(camera);
             connect(imageCapture, SIGNAL(imageCaptured(int,QImage)), this, SLOT(showScreen(int, QImage)));
+            break;
+        }
+    }
+}
+
+void MainPage::selectSerialPort(QAction *act)
+{
+    foreach (const QSerialPortInfo &info, QSerialPortInfo::availablePorts()) {
+        if(info.portName() == act->text()){
+            QSerialPortInfo infoPortName = QSerialPortInfo(info.portName());
+            portControler.serial = new QSerialPort(infoPortName, this);
+            if(portControler.openSerialPort()){
+                //connect(portControler.serial, SIGNAL(readyRead()), portControler, SLOT(receiveData()));
+            }else{ // 设置串口错误
+                QMessageBox::critical(this, tr("Error"), portControler.serial->errorString());
+            }
             break;
         }
     }
@@ -100,9 +127,12 @@ void MainPage::openInsurance()
 
 void MainPage::openLock()
 {
+    if(!portControler.isOpen()){
+       QMessageBox::critical(this, tr("Error"), "请选择串口！");
+       return;
+    }
     if(!lockStatus){ // 锁定
         if(insuranceStatus && ui->screen->isBoxSelect()){ // 保险打开，并且锁定对象
-
             lockStatus = true;
             ui->lockBtn->setStyleSheet("QPushButton{"
                                        "background-image:url(:/Resources/button_active.png);"
@@ -112,11 +142,10 @@ void MainPage::openLock()
                                        "}");
             boxInit(oriFrame, ui->screen->getBoxRect());
             textSender("目标锁定！");
-        }
-        else
+        }else{
             textSender("请选定目标框！！！");
-    }
-    else{ // 取消锁定
+        }
+    }else{ // 取消锁定
         ui->lockBtn->setStyleSheet("QPushButton{"
                                    "background-image:url(:/Resources/button_inactive.png);"
                                    "border-width: 30px;"
@@ -169,11 +198,11 @@ void MainPage::textReceiver(const QString &text)
 
 void MainPage::trackerInit()
 {
-    bool HOG = false;
+    bool HOG = true;
     bool FIXEDWINDOW = false;
     bool MULTISCALE = true;
     //bool SILENT = true;
-    bool LAB = false;
+    bool LAB = true;
     tracker = KCFTracker(HOG, FIXEDWINDOW, MULTISCALE, LAB);
 }
 

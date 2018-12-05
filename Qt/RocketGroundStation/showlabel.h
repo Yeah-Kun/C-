@@ -1,6 +1,6 @@
 ﻿#ifndef SHOWLABEL_H
 #define SHOWLABEL_H
-#pragma execution_character_set("utf-8");
+#pragma execution_character_set("utf-8")
 #include <QLabel>
 #include <QPainter>
 #include <QPaintEvent>
