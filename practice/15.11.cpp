@@ -9,16 +9,18 @@
 class Quote{
 public:
     Quote() = default;
-    Quote(const std::string& s, double p):bookNo(s)
-    {
-        price = p;
-    };
+    Quote(const std::string& s):bookNo(s){};
 
     std::string isbn() const{
         return bookNo;
     };
     virtual double net_price(std::size_t n) const{
         return n*price;
+    };
+
+    virtual void debug(std::ostream &os) const{
+        os << "bookNo:" << bookNo <<
+              " price:" << price << std::endl;
     };
 
 private:
@@ -30,33 +32,19 @@ protected:
 };
 
 
-
-class Disc_quote:public Quote
-{
-
-public:
-    Disc_quote() = default;
-    Disc_quote(const std::string& book, double price, std::size_t qty, double disc)
-                : Quote(book, price), quantify(qty), discount(disc){}
-
-    double net_price(std::size_t) const = 0;
-protected:
-    std::size_t quantify = 0; // 适用折扣的购买量
-    double discount = 0.0; // 折扣
-
-};
-
-
 /**
  * Bulk_Quote类
  * 作用：打折销售的书籍
  */
-class Bulk_quote: public Disc_quote
+class Bulk_quote: public Quote
 {
 public:
     Bulk_quote() = default;
     Bulk_quote(const std::string& filename, double p, std::size_t min_q, double d)
-        : Disc_quote(filename, p, min_q, d) {}
+        : Quote(filename), min_qty(min_q) {
+            price = p;
+            discount = d;
+        }
     
     double net_price(std::size_t n) const override{
         if(n >= min_qty)
@@ -68,6 +56,12 @@ public:
             return n*price;
         }
     }
+
+    virtual void debug(std::ostream &os) const override{
+        this->Quote::debug(os);
+        os << "min_qty:" << min_qty <<
+              " discount:" << discount;
+    };
 
 private:
     std::size_t min_qty = 0; // 最低购买数量
@@ -88,7 +82,6 @@ double print_total(std::ostream &os, const Quote &item, size_t n)
 int main()
 {
     Bulk_quote q("good job", 10, 10, 0.9);
-    print_total(std::cout, q, 100);
-
+    q.debug(std::cout);
     return 0;
 }

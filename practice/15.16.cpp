@@ -59,7 +59,7 @@ public:
         : Disc_quote(filename, p, min_q, d) {}
     
     double net_price(std::size_t n) const override{
-        if(n >= min_qty)
+        if(n >= quantify)
         {
             return n * price * discount;
         }
@@ -68,10 +68,6 @@ public:
             return n*price;
         }
     }
-
-private:
-    std::size_t min_qty = 0; // 最低购买数量
-    double discount = 0.0; // 折扣
 
 };
 

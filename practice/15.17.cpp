@@ -59,7 +59,7 @@ public:
         : Disc_quote(filename, p, min_q, d) {}
     
     double net_price(std::size_t n) const override{
-        if(n >= min_qty)
+        if(n >= quantify)
         {
             return n * price * discount;
         }
@@ -68,10 +68,6 @@ public:
             return n*price;
         }
     }
-
-private:
-    std::size_t min_qty = 0; // 最低购买数量
-    double discount = 0.0; // 折扣
 
 };
 
@@ -87,8 +83,8 @@ double print_total(std::ostream &os, const Quote &item, size_t n)
 
 int main()
 {
-    Bulk_quote q("good job", 10, 10, 0.9);
-    print_total(std::cout, q, 100);
+    Disc_quote ss("good job", 10, 10, 0.9);
+    print_total(std::cout, ss, 100);
 
     return 0;
 }

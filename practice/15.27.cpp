@@ -13,6 +13,15 @@ public:
     {
         price = p;
     };
+    Quote(const Quote& q)
+    {
+        this->bookNo = q.bookNo;
+        this->price = q.price;
+        std::cout << "create Quote object: " 
+                  << "bookNo:" << bookNo
+                  << " price:" << price
+                  << "\n";
+    }
 
     std::string isbn() const{
         return bookNo;
@@ -38,6 +47,15 @@ public:
     Disc_quote() = default;
     Disc_quote(const std::string& book, double price, std::size_t qty, double disc)
                 : Quote(book, price), quantify(qty), discount(disc){}
+    Disc_quote(const Disc_quote& q): Quote(q)
+    {
+        this->quantify = q.quantify;
+        this->discount = q.discount;
+        std::cout << "create Disc_quote object: " 
+                  << "quantify:" << quantify
+                  << " discount:" << discount
+                  << "\n";
+    }
 
     double net_price(std::size_t) const = 0;
 protected:
@@ -57,9 +75,11 @@ public:
     Bulk_quote() = default;
     Bulk_quote(const std::string& filename, double p, std::size_t min_q, double d)
         : Disc_quote(filename, p, min_q, d) {}
-    
+
+    using Disc_quote::Disc_quote;
+
     double net_price(std::size_t n) const override{
-        if(n >= min_qty)
+        if(n >= quantify)
         {
             return n * price * discount;
         }
@@ -68,10 +88,6 @@ public:
             return n*price;
         }
     }
-
-private:
-    std::size_t min_qty = 0; // 最低购买数量
-    double discount = 0.0; // 折扣
 
 };
 
@@ -87,7 +103,8 @@ double print_total(std::ostream &os, const Quote &item, size_t n)
 
 int main()
 {
-    Bulk_quote q("good job", 10, 10, 0.9);
+    Bulk_quote bbq("good job", 10, 10, 0.9);
+    Bulk_quote q(bbq);
     print_total(std::cout, q, 100);
 
     return 0;
