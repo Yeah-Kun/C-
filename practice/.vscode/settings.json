@@ -45,7 +45,16 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "array": "cpp",
-        "iterator": "cpp"
+        "iterator": "cpp",
+        "cctype": "cpp",
+        "cstdarg": "cpp",
+        "ctime": "cpp",
+        "locale": "cpp",
+        "string_view": "cpp",
+        "xlocbuf": "cpp",
+        "xlocmes": "cpp",
+        "xlocmon": "cpp",
+        "xloctime": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

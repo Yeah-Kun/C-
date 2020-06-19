@@ -28,7 +28,8 @@ public:
     size_type size() const { return data->size(); }
     bool empty() const { return data->empty(); }
     // 添加和删除元素
-    void push_back(const std::string &t) { data->empty(); }
+    void push_back(const std::string &t) { data->push_back(t); }
+    void push_back(std::string&& t){ data->push_back(t); }
     void pop_back();
     // 元素访问
     std::string& front();
@@ -44,12 +45,6 @@ private:
     // 如果data[1]不合法，抛出一个异常
     void check(size_type i, const std::string &msg) const;
 };
-
-
-
-
-
-
 
 
 

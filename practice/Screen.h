@@ -1,3 +1,7 @@
+#include <iostream>
+#include <string>
+
+
 class Screen{
 
 public:

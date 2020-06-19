@@ -1,4 +1,4 @@
-#include "videocatcher.h"
+﻿#include "videocatcher.h"
 #include "ui_videocatcher.h"
 
 VideoCatcher::VideoCatcher(QWidget *parent) :
@@ -8,7 +8,7 @@ VideoCatcher::VideoCatcher(QWidget *parent) :
     ui->setupUi(this);
     QList<QCameraInfo> cameras = QCameraInfo::availableCameras();
     foreach (const QCameraInfo &cameraInfo, cameras) {
-        qDebug() << cameraInfo.deviceName();
+        qDebug() << cameraInfo.description();
     }
 }
 

@@ -1,4 +1,5 @@
 #include<iostream>
+#include<string>
 
 using namespace std;
 class Sales_data{
@@ -41,9 +42,6 @@ Sales_data::Sales_data(const std::string &s, unsigned n, double p)
 // 在类的外部定义内联函数
 inline double Sales_data::avg_price() const
 {
-	// mutable double avg;
-	// avg = revenue / units_sold;
-	// return avg;
 	if(units_sold)
 		return revenue / units_sold;
 	else
